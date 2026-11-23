@@ -46,7 +46,7 @@ Then upload your photo files alongside index.html on GitHub.
 
 ## 🔐 Identity Verification
 - **Name:** Sneka (case-insensitive)
-- **Birthday:** June 17, 2002
+- **Birthday:** June 17, 2002 (pre-filled; editable as DD/MM/YYYY or YYYY-MM-DD)
 
 ## 📁 Files
 - `index.html` — All pages and structure

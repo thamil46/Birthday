@@ -431,7 +431,7 @@
           </div>
           <div class="field">
             <label for="guest-birthday">Your birthday</label>
-            <input id="guest-birthday" name="birthday" type="date"/>
+            <input id="guest-birthday" name="birthday" type="text" value="17/06/2002" placeholder="DD/MM/YYYY" autocomplete="bday" maxlength="10"/>
           </div>
           <p class="error" id="error-message" role="alert"></p>
           <div class="verify-actions">
@@ -556,6 +556,7 @@
 
     const screens = Array.from(document.querySelectorAll(".screen"));
     const verifyForm = document.getElementById("verify-form");
+    const birthdayInput = document.getElementById("guest-birthday");
     const errorMessage = document.getElementById("error-message");
     const image = document.getElementById("story-image");
     const musicButton = document.getElementById("music-button");
@@ -806,10 +807,17 @@
       errorMessage.textContent = "";
       showScreen("screen-welcome");
     });
+    function normalizeBirthday(value) {
+      const input = value.trim();
+      const match = input.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);
+      if (!match) return input;
+      const [, day, month, year] = match;
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    }
     verifyForm.addEventListener("submit", (event) => {
       event.preventDefault();
       const name = document.getElementById("guest-name").value.trim().toLowerCase();
-      const birthday = document.getElementById("guest-birthday").value;
+      const birthday = normalizeBirthday(birthdayInput.value);
       if (!name || !birthday) {
         errorMessage.textContent = "Please enter your name and birthday first.";
         return;
@@ -834,7 +842,7 @@
       stopMusic();
       musicButton.classList.remove("visible");
       document.getElementById("guest-name").value = "";
-      document.getElementById("guest-birthday").value = "";
+      birthdayInput.value = birthdayInput.defaultValue;
       errorMessage.textContent = "";
       showScreen("screen-welcome");
     });
